@@ -12,7 +12,21 @@
       "Bash(curl -s http://127.0.0.1:5000/)",
       "Bash(disown)",
       "Bash(npx --yes playwright --version)",
-      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,1400 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/mobile_full.png http://127.0.0.1:5000/)"
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,1400 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/mobile_full.png http://127.0.0.1:5000/)",
+      "Bash(rm -rf app.py storage.py templates .venv requirements.txt __pycache__ data.json .claude)",
+      "Bash(nohup python3 -m http.server 8080)",
+      "Bash(curl -s -o /dev/null -w \"index: %{http_code}\\\\n\" http://127.0.0.1:8080/)",
+      "Bash(curl -s -o /dev/null -w \"logo: %{http_code}\\\\n\" http://127.0.0.1:8080/static/logo.png)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,844 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/static_test.png http://127.0.0.1:8080/)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,844 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/preview_test.png http://127.0.0.1:8080/test-preview.html)",
+      "Bash(cd /home/juanma/Proyectos/PagGaston *)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=2000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/preview_autofill.png http://127.0.0.1:8080/test-preview.html?autofill)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=3000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/preview_autofill2.png http://127.0.0.1:8080/test-preview.html?autofill)",
+      "Bash(pkill -f \"http.server 8080\")",
+      "Bash(rm -f /tmp/emede-fb-test.html /tmp/click_test.js)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }
