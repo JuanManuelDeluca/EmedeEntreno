@@ -1,5 +1,6 @@
 const CUPO_MAXIMO = 8;
 const HORA_APERTURA_DIA_SIGUIENTE = 21; // desde las 21hs se muestra el horario del día siguiente
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLKP-5KiehkEJ4J81lb76TG_Ahdb1lU1x9yIMX9RBfS1yGZ07Tnx35J2Z-QeLrNDZ8/exec";
 
 const HORARIOS = {
   "Lunes": ["17:00", "18:00", "19:00"],
@@ -31,20 +32,20 @@ function fechaYDiaAMostrar() {
   return { fecha: formatFechaLocal(objetivo), dia: DIAS[objetivo.getDay()] };
 }
 
-function render(fecha, dia, horariosHoy, signupsData) {
+function render(dia, horariosHoy, signups) {
   diaEl.textContent = dia;
 
   if (horariosHoy.length === 0) {
     horariosDiv.style.display = "none";
     vacioEl.style.display = "block";
+    vacioEl.textContent = "Hoy no hay clases. ¡Nos vemos el próximo día hábil!";
     return;
   }
   vacioEl.style.display = "none";
   horariosDiv.innerHTML = "";
 
   horariosHoy.forEach((hora) => {
-    const entradas = signupsData[hora] || {};
-    const nombres = Object.entries(entradas);
+    const nombres = signups[hora] || [];
     const lleno = nombres.length >= CUPO_MAXIMO;
 
     const card = document.createElement("div");
@@ -61,7 +62,7 @@ function render(fecha, dia, horariosHoy, signupsData) {
     if (nombres.length > 0) {
       const ul = document.createElement("ul");
       ul.className = "nombres";
-      nombres.forEach(([, nombre]) => {
+      nombres.forEach((nombre) => {
         const li = document.createElement("li");
         li.textContent = nombre;
         ul.appendChild(li);
@@ -83,10 +84,15 @@ function render(fecha, dia, horariosHoy, signupsData) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const input = form.querySelector('input[name="nombre"]');
+        const boton = form.querySelector("button");
         const nombre = input.value.trim();
         if (!nombre) return;
-        anotarse(fecha, hora, nombre, nombres.length);
-        input.value = "";
+        boton.disabled = true;
+        boton.textContent = "Anotando...";
+        anotarse(hora, nombre).finally(() => {
+          boton.disabled = false;
+          boton.textContent = "Anotarme";
+        });
       });
       card.appendChild(form);
     }
@@ -95,34 +101,34 @@ function render(fecha, dia, horariosHoy, signupsData) {
   });
 }
 
-function anotarse(fecha, hora, nombre, cantidadActual) {
-  if (cantidadActual >= CUPO_MAXIMO) return;
-  firebase.database().ref(`signups/${fecha}/${hora}`).push(nombre);
-}
-
-function init() {
-  if (typeof firebaseConfig === "undefined" || firebaseConfig.apiKey === "TU_API_KEY") {
-    diaEl.textContent = "";
-    horariosDiv.style.display = "none";
-    vacioEl.style.display = "block";
-    vacioEl.textContent = "Falta configurar Firebase en firebase-config.js para que la página funcione.";
-    return;
-  }
-
+async function cargarYRenderizar() {
   const { fecha, dia } = fechaYDiaAMostrar();
   const horariosHoy = HORARIOS[dia] || [];
 
   if (horariosHoy.length === 0) {
-    render(fecha, dia, horariosHoy, {});
+    render(dia, horariosHoy, {});
     return;
   }
 
-  firebase
-    .database()
-    .ref(`signups/${fecha}`)
-    .on("value", (snapshot) => {
-      render(fecha, dia, horariosHoy, snapshot.val() || {});
-    });
+  const resp = await fetch(`${APPS_SCRIPT_URL}?fecha=${fecha}`);
+  const signups = await resp.json();
+  render(dia, horariosHoy, signups);
+}
+
+async function anotarse(hora, nombre) {
+  const { fecha } = fechaYDiaAMostrar();
+
+  await fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({ fecha, hora, nombre, cupoMaximo: CUPO_MAXIMO }),
+  });
+
+  await cargarYRenderizar();
+}
+
+function init() {
+  cargarYRenderizar();
 }
 
 init();

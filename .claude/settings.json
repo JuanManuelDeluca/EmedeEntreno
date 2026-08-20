@@ -23,7 +23,23 @@
       "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=2000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/preview_autofill.png http://127.0.0.1:8080/test-preview.html?autofill)",
       "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=3000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/preview_autofill2.png http://127.0.0.1:8080/test-preview.html?autofill)",
       "Bash(pkill -f \"http.server 8080\")",
-      "Bash(rm -f /tmp/emede-fb-test.html /tmp/click_test.js)"
+      "Bash(rm -f /tmp/emede-fb-test.html /tmp/click_test.js)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,844 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/nofb_1.png http://127.0.0.1:8080/)",
+      "Bash(python3 -)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=3000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/real_autofill.png http://127.0.0.1:8080/test-real.html)",
+      "Bash(sed -i 's/const APPS_SCRIPT_URL = \"PEGA_ACA_TU_URL_DE_APPS_SCRIPT\";//' /dev/null)",
+      "Bash(sed 's/PEGA_ACA_TU_URL_DE_APPS_SCRIPT/http:\\\\/\\\\/fake\\\\/exec/' app.js)",
+      "Bash(sed -i 's#<script src=\"app.js\"></script>#<script src=\"test-app.js\"></script>#' test-real.html)",
+      "Bash(curl -s -o /dev/null -w \"test: %{http_code}\\\\n\" http://127.0.0.1:8080/test-real.html)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=5000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/sheets_test.png http://127.0.0.1:8080/test-real.html)",
+      "Bash(google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --window-size=390,700 --virtual-time-budget=5000 --screenshot=/tmp/claude-1000/-home-juanma-Proyectos-PagGaston/c82ce57f-e751-4eb5-bb5e-d31311eb7ccd/scratchpad/sheets_test2.png http://127.0.0.1:8080/test-real.html)",
+      "Bash(curl -s -m 15 -o /tmp/gs_test.json -w \"http_code: %{http_code}\\\\n\" \"https://script.google.com/macros/s/AKfycbxLKP-5KiehkEJ4J81lb76TG_Ahdb1lU1x9yIMX9RBfS1yGZ07Tnx35J2Z-QeLrNDZ8/exec?fecha=2026-08-20\")",
+      "Bash(curl -sL -m 20 -o /tmp/gs_test.json -w \"http_code: %{http_code}\\\\n\" \"https://script.google.com/macros/s/AKfycbxLKP-5KiehkEJ4J81lb76TG_Ahdb1lU1x9yIMX9RBfS1yGZ07Tnx35J2Z-QeLrNDZ8/exec?fecha=2026-08-20\")",
+      "Bash(curl -sL -m 20 -X POST -H 'Content-Type: text/plain;charset=utf-8' -d '{\"fecha\":\"2026-08-20\",\"hora\":\"9:00\",\"nombre\":\"Prueba Claude\",\"cupoMaximo\":8}' -o /tmp/gs_post.json -w 'http_code: %{http_code}\\\\n' https://script.google.com/macros/s/AKfycbxLKP-5KiehkEJ4J81lb76TG_Ahdb1lU1x9yIMX9RBfS1yGZ07Tnx35J2Z-QeLrNDZ8/exec)",
+      "Bash(curl -sL -m 20 \"https://script.google.com/macros/s/AKfycbxLKP-5KiehkEJ4J81lb76TG_Ahdb1lU1x9yIMX9RBfS1yGZ07Tnx35J2Z-QeLrNDZ8/exec?fecha=2026-08-20\")",
+      "Bash(curl -s -m 20 -X POST -H 'Content-Type: text/plain;charset=utf-8' -d '{\"fecha\":\"2026-08-20\",\"hora\":\"9:00\",\"nombre\":\"Prueba Claude\",\"cupoMaximo\":8}' -D - -o /dev/null https://script.google.com/macros/s/AKfycbxLKP-5KiehkEJ4J81lb76TG_Ahdb1lU1x9yIMX9RBfS1yGZ07Tnx35J2Z-QeLrNDZ8/exec)",
+      "Bash(curl -s -m 20 \"https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnRAhSY0_KWCILlb_WSsCR1nqybUf4yV87w7J5VRB-RS9AX6ZYlvFApW-Q3NaAG-oJ_SbgCaE5kZTZozuQSU32llI_2BjpEFBUO3ld1BYHeozN2DWtlQsCJ4mr6pqtEPTi-aVcEWGByp6UZuS8T-uOf6zfBZF0QVS9eIWzUgZdrfu9ky7Wk_w_IaUQvx-p4805xwzbzZz-5y3HQi-8cqvofpXjlNWzgiBP6Y62D32JaE3nm0Zp0XgiN2rHYbwUbkdaGGjhTFoHdIXwQOkqmtaQ1SOT4Z7A&lib=ME0HdSh53tWKbQx--wM-KAQEaxJNcUnhT\" -w \"\\\\nhttp_code: %{http_code}\\\\n\")",
+      "Bash(node -e ' *)"
     ],
     "additionalDirectories": [
       "/tmp"
