@@ -208,6 +208,8 @@ button:disabled {
   padding: 20px;
   max-width: 320px;
   width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
   text-align: center;
 }
 
@@ -266,7 +268,8 @@ button:disabled {
 }
 
 .admin-card {
-  max-width: 380px;
+  max-width: 340px;
+  padding: 16px;
   text-align: left;
   position: relative;
 }
@@ -284,31 +287,31 @@ button:disabled {
 }
 
 .admin-titulo {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #f5d020;
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
   text-align: center;
 }
 
 .admin-label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #ccc;
-  margin: 12px 0 4px;
+  margin: 8px 0 4px;
 }
 
 #admin-login input,
 #admin-panel input[type="text"],
 #admin-panel input[type="number"] {
   width: 100%;
-  padding: 10px 12px;
+  padding: 7px 10px;
   border-radius: 8px;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   background: #fff;
   color: #111;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .admin-error {
@@ -328,7 +331,8 @@ button:disabled {
 
 .admin-boton {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
+  padding: 9px 14px;
 }
 
 .admin-boton-secundario {
@@ -337,14 +341,14 @@ button:disabled {
 }
 
 .admin-dia {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .admin-dia label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: #ccc;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .admin-link {

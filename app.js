@@ -37,6 +37,11 @@ const adminGuardar = document.getElementById("admin-guardar");
 const adminSalir = document.getElementById("admin-salir");
 const adminGuardado = document.getElementById("admin-guardado");
 const adminOlvide = document.getElementById("admin-olvide");
+const adminRecuperar = document.getElementById("admin-recuperar");
+const adminRecuperarEmail = document.getElementById("admin-recuperar-email");
+const adminRecuperarMsg = document.getElementById("admin-recuperar-msg");
+const adminRecuperarEnviar = document.getElementById("admin-recuperar-enviar");
+const adminRecuperarVolver = document.getElementById("admin-recuperar-volver");
 const adminMostrarClave = document.getElementById("admin-mostrar-clave");
 const adminCambiarClave = document.getElementById("admin-cambiar-clave");
 const adminClaveNueva = document.getElementById("admin-clave-nueva");
@@ -230,9 +235,18 @@ function cerrarAdmin() {
 
 function mostrarLoginAdmin() {
   adminLogin.style.display = "block";
+  adminRecuperar.style.display = "none";
   adminPanel.style.display = "none";
   adminEmail.value = "";
   adminPassword.value = "";
+}
+
+function mostrarRecuperarClave() {
+  adminLogin.style.display = "none";
+  adminRecuperar.style.display = "block";
+  adminRecuperarEmail.value = "";
+  adminRecuperarMsg.textContent = "";
+  adminRecuperarMsg.style.color = "";
 }
 
 function mostrarPanelAdmin() {
@@ -327,24 +341,24 @@ async function iniciarSesionAdmin() {
 }
 
 async function enviarResetClave() {
-  adminError.textContent = "";
-  const email = adminEmail.value.trim();
+  adminRecuperarMsg.textContent = "";
+  adminRecuperarMsg.style.color = "";
+  const email = adminRecuperarEmail.value.trim();
 
   if (!email) {
-    adminError.textContent = "Poné tu email primero y tocá el link de nuevo.";
+    adminRecuperarMsg.textContent = "Poné tu email.";
     return;
   }
 
-  adminOlvide.disabled = true;
+  adminRecuperarEnviar.disabled = true;
   try {
     await firebase.auth().sendPasswordResetEmail(email);
-    adminError.style.color = "#7ed17e";
-    adminError.textContent = "Te enviamos un mail para elegir una nueva contraseña.";
+    adminRecuperarMsg.style.color = "#7ed17e";
+    adminRecuperarMsg.textContent = "Te enviamos un mail para elegir una nueva contraseña.";
   } catch (err) {
-    adminError.style.color = "";
-    adminError.textContent = "No se pudo enviar el mail. Revisá que el email sea correcto.";
+    adminRecuperarMsg.textContent = "No se pudo enviar el mail. Revisá que el email sea correcto.";
   } finally {
-    adminOlvide.disabled = false;
+    adminRecuperarEnviar.disabled = false;
   }
 }
 
@@ -405,7 +419,9 @@ function init() {
     if (e.key === "Enter") iniciarSesionAdmin();
   });
   adminGuardar.addEventListener("click", guardarConfigAdmin);
-  adminOlvide.addEventListener("click", enviarResetClave);
+  adminOlvide.addEventListener("click", mostrarRecuperarClave);
+  adminRecuperarEnviar.addEventListener("click", enviarResetClave);
+  adminRecuperarVolver.addEventListener("click", mostrarLoginAdmin);
   adminMostrarClave.addEventListener("click", () => {
     const visible = adminCambiarClave.style.display !== "none";
     adminCambiarClave.style.display = visible ? "none" : "block";
