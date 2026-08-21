@@ -110,17 +110,7 @@ function renderPagina() {
   const { dia, objetivoDate, esHoyReal } = fechaYDiaAMostrar();
   const horarios = configActual.horarios || HORARIOS_DEFECTO;
   const cupoMaximo = configActual.cupoMaximo || CUPO_MAXIMO_DEFECTO;
-  let horariosHoy = horarios[dia] || [];
-
-  if (esHoyReal) {
-    const ahora = new Date();
-    horariosHoy = horariosHoy.filter((hora) => {
-      const [h, m] = hora.split(":").map(Number);
-      const horaDate = new Date(ahora);
-      horaDate.setHours(h, m, 0, 0);
-      return horaDate.getTime() > ahora.getTime();
-    });
-  }
+  const horariosHoy = horarios[dia] || [];
 
   diaEl.textContent = dia;
 
@@ -129,17 +119,32 @@ function renderPagina() {
     vacioEl.style.display = "block";
     const proximoDia = proximoDiaConClases(horarios, objetivoDate);
     vacioEl.textContent = proximoDia
-      ? `Por hoy no quedan turnos. ¡Nos vemos el ${proximoDia}!`
+      ? `Hoy no hay clases. ¡Nos vemos el ${proximoDia}!`
       : "Por ahora no hay horarios cargados.";
     return;
   }
   vacioEl.style.display = "none";
   horariosDiv.innerHTML = "";
 
+  const ahora = new Date();
+
   horariosHoy.forEach((hora) => {
     const entradas = signupsActuales[hora] || {}; // { pushId: nombre }
     const items = Object.entries(entradas);
     const lleno = items.length >= cupoMaximo;
+
+    let yaPaso = false;
+    if (esHoyReal) {
+      const [h, m] = hora.split(":").map(Number);
+      const horaDate = new Date(ahora);
+      horaDate.setHours(h, m, 0, 0);
+      yaPaso = horaDate.getTime() <= ahora.getTime();
+    }
+
+    const noDisponible = lleno || yaPaso;
+    let etiqueta = "";
+    if (lleno) etiqueta = " · COMPLETO";
+    else if (yaPaso) etiqueta = " · FINALIZADO";
 
     const card = document.createElement("div");
     card.className = "horario";
@@ -148,7 +153,7 @@ function renderPagina() {
     header.className = "horario-header";
     header.innerHTML = `
       <span class="hora">${hora}</span>
-      <span class="cupo ${lleno ? "lleno" : ""}">${items.length}/${cupoMaximo}${lleno ? " · COMPLETO" : ""}</span>
+      <span class="cupo ${noDisponible ? "lleno" : ""}">${items.length}/${cupoMaximo}${etiqueta}</span>
     `;
     card.appendChild(header);
 
@@ -181,7 +186,7 @@ function renderPagina() {
       card.appendChild(p);
     }
 
-    if (!lleno) {
+    if (!noDisponible) {
       const form = document.createElement("form");
       form.innerHTML = `
         <input type="text" name="nombre" placeholder="Tu nombre" required maxlength="40">
