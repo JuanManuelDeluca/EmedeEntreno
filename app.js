@@ -65,7 +65,22 @@ function fechaYDiaAMostrar() {
   if (ahora.getHours() >= HORA_APERTURA_DIA_SIGUIENTE) {
     objetivo.setDate(objetivo.getDate() + 1);
   }
-  return { fecha: formatFechaLocal(objetivo), dia: DIAS[objetivo.getDay()] };
+  return {
+    fecha: formatFechaLocal(objetivo),
+    dia: DIAS[objetivo.getDay()],
+    objetivoDate: objetivo,
+    esHoyReal: formatFechaLocal(objetivo) === formatFechaLocal(ahora),
+  };
+}
+
+function proximoDiaConClases(horarios, desdeDate) {
+  const d = new Date(desdeDate);
+  for (let i = 0; i < 7; i++) {
+    d.setDate(d.getDate() + 1);
+    const diaCandidato = DIAS[d.getDay()];
+    if ((horarios[diaCandidato] || []).length > 0) return diaCandidato;
+  }
+  return null;
 }
 
 function confirmarPersonalizado(mensaje) {
@@ -92,17 +107,30 @@ function confirmarPersonalizado(mensaje) {
 }
 
 function renderPagina() {
-  const { dia } = fechaYDiaAMostrar();
+  const { dia, objetivoDate, esHoyReal } = fechaYDiaAMostrar();
   const horarios = configActual.horarios || HORARIOS_DEFECTO;
   const cupoMaximo = configActual.cupoMaximo || CUPO_MAXIMO_DEFECTO;
-  const horariosHoy = horarios[dia] || [];
+  let horariosHoy = horarios[dia] || [];
+
+  if (esHoyReal) {
+    const ahora = new Date();
+    horariosHoy = horariosHoy.filter((hora) => {
+      const [h, m] = hora.split(":").map(Number);
+      const horaDate = new Date(ahora);
+      horaDate.setHours(h, m, 0, 0);
+      return horaDate.getTime() > ahora.getTime();
+    });
+  }
 
   diaEl.textContent = dia;
 
   if (horariosHoy.length === 0) {
     horariosDiv.style.display = "none";
     vacioEl.style.display = "block";
-    vacioEl.textContent = "Hoy no hay clases. ¡Nos vemos el próximo día hábil!";
+    const proximoDia = proximoDiaConClases(horarios, objetivoDate);
+    vacioEl.textContent = proximoDia
+      ? `Por hoy no quedan turnos. ¡Nos vemos el ${proximoDia}!`
+      : "Por ahora no hay horarios cargados.";
     return;
   }
   vacioEl.style.display = "none";
@@ -408,6 +436,7 @@ function init() {
   }
 
   escucharDatos();
+  setInterval(renderPagina, 60000);
 
   adminIcon.addEventListener("click", abrirAdmin);
   adminCerrar.addEventListener("click", cerrarAdmin);
