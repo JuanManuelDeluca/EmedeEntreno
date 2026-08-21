@@ -91,8 +91,27 @@ header {
 .nombres li {
   background: #2b2b2b;
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 4px 6px 4px 10px;
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quitar {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.quitar:hover {
+  color: #e5484d;
+  background: #3a1f1f;
 }
 
 .sin-anotados {
@@ -169,4 +188,180 @@ button:disabled {
   width: 24px;
   height: 24px;
   fill: #f5d020;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+
+.modal-card {
+  background: #1f1f1f;
+  border: 2px solid #f5d020;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 320px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-card p {
+  margin: 0 0 18px 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.modal-botones {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-botones button {
+  flex: 1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-cancelar {
+  background: #333;
+  color: #fff;
+}
+
+.modal-aceptar {
+  background: #e5484d;
+  color: #fff;
+}
+
+#admin-icon {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1f1f1f;
+  border: 2px solid #f5d020;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 50;
+}
+
+#admin-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: #f5d020;
+}
+
+.admin-card {
+  max-width: 380px;
+  text-align: left;
+  position: relative;
+}
+
+.admin-cerrar-x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1rem;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.admin-titulo {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #f5d020;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.admin-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #ccc;
+  margin: 12px 0 4px;
+}
+
+#admin-login input,
+#admin-panel input[type="text"],
+#admin-panel input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background: #fff;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+.admin-error {
+  color: #e5484d;
+  font-size: 0.85rem;
+  min-height: 1em;
+  margin: 0 0 8px 0;
+}
+
+.admin-guardado {
+  color: #7ed17e;
+  font-size: 0.85rem;
+  min-height: 1em;
+  margin: 8px 0 0 0;
+  text-align: center;
+}
+
+.admin-boton {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.admin-boton-secundario {
+  background: #333;
+  color: #fff;
+}
+
+.admin-dia {
+  margin-bottom: 10px;
+}
+
+.admin-dia label {
+  display: block;
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+.admin-link {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: #f5d020;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 0 0;
+  cursor: pointer;
+}
+
+#admin-cambiar-clave {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #333;
 }

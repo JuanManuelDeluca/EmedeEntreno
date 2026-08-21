@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <button id="admin-icon" type="button" aria-label="Acceso del dueño">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5"/></svg>
+  </button>
+
   <div class="wrap">
     <header>
       <img class="logo-img" src="static/logo.png" alt="EMEDE">
@@ -29,6 +33,57 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card">
+      <p id="modal-mensaje"></p>
+      <div class="modal-botones">
+        <button id="modal-cancelar" type="button" class="modal-cancelar">Cancelar</button>
+        <button id="modal-aceptar" type="button" class="modal-aceptar">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="admin-overlay">
+    <div class="modal-card admin-card">
+      <button id="admin-cerrar" type="button" class="admin-cerrar-x" aria-label="Cerrar">✕</button>
+
+      <div id="admin-login">
+        <p class="admin-titulo">Acceso del dueño</p>
+        <input type="email" id="admin-email" placeholder="Email" autocomplete="username">
+        <input type="password" id="admin-password" placeholder="Contraseña" autocomplete="current-password">
+        <p id="admin-error" class="admin-error"></p>
+        <button id="admin-entrar" type="button" class="admin-boton">Entrar</button>
+        <button id="admin-olvide" type="button" class="admin-link">¿Olvidaste tu contraseña?</button>
+      </div>
+
+      <div id="admin-panel" style="display:none;">
+        <p class="admin-titulo">Editar horarios y cupo</p>
+
+        <label class="admin-label">Cupo máximo por horario</label>
+        <input type="number" id="admin-cupo" min="1" max="50">
+
+        <div id="admin-dias"></div>
+
+        <p id="admin-guardado" class="admin-guardado"></p>
+        <button id="admin-guardar" type="button" class="admin-boton">Guardar cambios</button>
+
+        <button id="admin-mostrar-clave" type="button" class="admin-link">Cambiar contraseña</button>
+        <div id="admin-cambiar-clave" style="display:none;">
+          <input type="password" id="admin-clave-nueva" placeholder="Nueva contraseña" autocomplete="new-password">
+          <input type="password" id="admin-clave-repetir" placeholder="Repetir contraseña" autocomplete="new-password">
+          <p id="admin-clave-error" class="admin-error"></p>
+          <button id="admin-clave-guardar" type="button" class="admin-boton admin-boton-secundario">Confirmar nueva contraseña</button>
+        </div>
+
+        <button id="admin-salir" type="button" class="admin-boton admin-boton-secundario">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
